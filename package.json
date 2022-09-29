@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npx nodemon --watch src server_build/bundle.js",
+    "build:client": "npx webpack build --config ./webpack.client.js --watch",
     "build:server": "npx webpack build --config ./webpack.server.js --watch"
   },
   "author": "",
@@ -15,6 +16,8 @@
     "@commitlint/config-conventional": "^17.1.0",
     "@sunupdong/eslint-config": "^1.0.1",
     "@types/express": "^4.17.14",
+    "@types/react": "^18.0.21",
+    "@types/react-dom": "^18.0.6",
     "babel-loader": "^8.2.5",
     "eslint": "^8.24.0",
     "husky": "^8.0.1",
@@ -26,6 +29,10 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
-    "express": "^4.18.1"
+    "@types/node": "^18.7.23",
+    "express": "^4.18.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.4.1"
   }
 }
