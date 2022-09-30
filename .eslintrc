@@ -1,12 +1,6 @@
 {
-  "extends": "@sunupdong",
+  "extends": "@sunupdong/eslint-config-react",
   "rules": {
-    "react/jsx-uses-react": "off",
-    "react/react-in-jsx-scope": "off",
-    "@typescript-eslint/no-var-requires": "off",
-    "comma-dangle": [2, "never"],
-    "@typescript-eslint/comma-dangle": "off",
-    "curly": "off",
     "no-console": 0
   }
 }

@@ -4,6 +4,7 @@ import express from 'express'
 import { renderToString } from 'react-dom/server'
 import { Route, Routes } from 'react-router-dom'
 import { StaticRouter } from 'react-router-dom/server'
+import { Helmet } from 'react-helmet'
 import router from '@/router'
 
 const app = express()
@@ -13,15 +14,21 @@ app.use(express.static(path.resolve(process.cwd(), 'client_build')))
 app.get('*', (req, res) => {
   const content = renderToString(
     <StaticRouter location={req.path}>
-    <Routes>
-      {router?.map((item, index) => {
-        return <Route {...item} key={index} />
-      })}
-    </Routes>
-  </StaticRouter>)
+      <Routes>
+        {router?.map((item, index) => {
+          return <Route {...item} key={index} />
+        })}
+      </Routes>
+    </StaticRouter>)
+
+  const helmet = Helmet.renderStatic()
 
   res.send(`
     <html
+      <head>
+        ${helmet.title.toString()}
+        ${helmet.meta.toString()}
+      </head>
       <body>
         <div id="root">${content}</div>
         <script src="/index.js"></script>
