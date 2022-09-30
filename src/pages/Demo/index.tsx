@@ -1,9 +1,67 @@
 import type { FC } from 'react'
+import { Fragment } from 'react'
+import { connect } from 'react-redux'
+import { Helmet } from 'react-helmet'
+import { getDemoData } from './store/demoReducer'
 
-const Demo: FC = () => {
+interface IProps {
+  content?: string
+  getDemoData?: (data: string) => void
+}
+
+const Demo: FC<IProps> = (data) => {
+  // const [content, setContent] = useState("");
+
+  // // 客户端异步请求
+  // useEffect(() => {
+  //   axios
+  //     .post("/api/getDemoData", {
+  //       content: "这是一个demo",
+  //     })
+  //     .then((res) => {
+  //       setContent(res.data?.data?.content);
+  //     });
+  // }, []);
+
   return (
-    <div>这是一个demo页面</div>
+    <Fragment>
+      <Helmet>
+        <title>简易的服务器端渲染框架 - DEMO</title>
+        <meta name="description" content="服务器端渲染框架"></meta>
+      </Helmet>
+      <div>
+        <h1>{data.content}</h1>
+        <button
+          onClick={(): void => {
+            data.getDemoData && data.getDemoData('刷新过后的数据')
+          }}
+        >
+          刷新
+        </button>
+      </div>
+    </Fragment>
   )
 }
 
-export default Demo
+const mapStateToProps = (state: any) => {
+  // 将对应reducer的内容透传回dom
+  return {
+    content: state?.demo?.content
+  }
+}
+
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    getDemoData: (data: string) => {
+      dispatch(getDemoData(data))
+    }
+  }
+}
+
+const storeDemo: any = connect(mapStateToProps, mapDispatchToProps)(Demo)
+
+storeDemo.getInitProps = (store: any, data?: string) => {
+  return store.dispatch(getDemoData(data || '这是初始化的demo'))
+}
+
+export default storeDemo
